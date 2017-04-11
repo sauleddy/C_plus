@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+/leetcode/300_LongestIncreasingSubsequence/build/
+/leetcode/300_LongestIncreasingSubsequence/dist/
+/leetcode/129_SumRoottoLeafNumbers/build/
+/leetcode/129_SumRoottoLeafNumbers/dist/
+/leetcode/372_SuperPow/dist/
+/leetcode/372_SuperPow/build/
+/leetcode/117_PopulatingNextRightPointersinEachNodeII/build/
+/leetcode/117_PopulatingNextRightPointersinEachNodeII/dist/
+/leetcode/017_LetterCombinationsofaPhoneNumber/build/
+/leetcode/017_LetterCombinationsofaPhoneNumber/dist/
