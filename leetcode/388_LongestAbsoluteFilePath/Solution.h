@@ -26,14 +26,8 @@ public:
     
     int lengthLongestPath(string input);
     
-private:
-    
-    int help(string& input, int& begin, int layer_cur);
-    
-    
+private:    
     int findNextToken(string& input, int begin, string& token, int& end);
-    
-
 };
 
 #endif /* SOLUTION_H */

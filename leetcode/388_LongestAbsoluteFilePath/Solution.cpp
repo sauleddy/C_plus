@@ -12,6 +12,7 @@
  */
 
 #include "Solution.h"
+#include <unordered_map>
 
 
 Solution::Solution() {
@@ -24,77 +25,38 @@ Solution::~Solution() {
 }
 
 int Solution::lengthLongestPath(string input) {
-    /*string token = "";
-    int begin = 0;
-    int end = 0;
-    int layer = 0;
-    do {
-        token = "";
-        layer = this->findNextToken(input, begin, token, end);
-        cout<< token<< ", "<< layer<< ", "<< end<< endl;
-        begin = end;
-    } while(layer != 0);*/
-    
-    int len_input = input.length();
-    if(len_input == 0) {
+    if(input.length() == 0) {
         return 0;
     }
+    
     input = "\n" + input;
-    //cout<< input<< endl;
     
+    unordered_map<int, int> umapLayerLen;
+    umapLayerLen[-1] = 0;
+    int max_len = 0;
+    string token = "";
     int begin = 0;
-    int max_len = this->help(input, begin, 0);
-    return max_len;
-}
-
-int Solution::help(string& input, int& begin, int layer_cur) {
-    int len_input = input.length();
-    if(begin >= len_input) {
-        return 0;
-    }
-    int max_length = 0;
-    
-    //cout<< "begin:"<< begin<< endl;
-    string token_this = "";
     int end = 0;
-    string token_next = "";
-    int layer_next = this->findNextToken(input, begin, token_next, end);
-    //cout<< "token_next:"<< token_next<< endl;
-    
-    while(layer_next >= layer_cur) {
-        //cout<< token_next<< endl;
-        if(layer_next == layer_cur) {
-            if(token_next.find(".") != std::string::npos) {
-                if(token_next.length() > max_length) {
-                    max_length = token_next.length();
-                }
-            } else {
-                token_this = token_next;
-                //cout<< token_this<< endl;
-            }
+    int layer = this->findNextToken(input, begin, token, end);
+    while(layer != -1) {
+        cout<< token<< ", "<< layer<< ", "<< end<< endl;
+        int len_token = token.length();
+        if(token.find(".") == std::string::npos) {
+            umapLayerLen[layer] = umapLayerLen[layer-1] + len_token + 1;
+            cout<< layer<< ","<< umapLayerLen[layer]<< endl;
+            
         } else {
-            if(token_next.find(".") != std::string::npos) {
-                int len_token_next = token_next.length();
-                len_token_next += token_this.length() + 1;
-                if(len_token_next > max_length) {
-                    max_length = len_token_next;
-                }
-            } else {
-                int max = this->help(input, begin, layer_next);
-                if(max > 0) {
-                    max += token_this.length() + 1;
-                }
-                if(max > max_length) {
-                    max_length = max;
-                }
+            int len_this = umapLayerLen[layer-1] + len_token;
+            cout<< len_this<< endl;
+            if(len_this > max_len) {
+                max_len = len_this;
             }
         }
         begin = end;
-        layer_next = this->findNextToken(input, begin, token_next, end);
+        layer = this->findNextToken(input, begin, token, end);
     }
     
-    //cout<< max_length<< endl;
-    return max_length;
+    return max_len;
 }
 
 int Solution::findNextToken(string& input, int begin, string& token, int& end) {
